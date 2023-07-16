@@ -5,8 +5,8 @@
 /.mendix-cache/
 /.classpath
 /.project
-/simpleruleengine.mpr.bak
-/simpleruleengine.mpr.lock
+/simplerulesengine.mpr.bak
+/simplerulesengine.mpr.lock
 /modeler-merge-marker
 /project-settings.user.json
 /javasource/*/proxies/
