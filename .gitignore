@@ -5,7 +5,6 @@
 /.mendix-cache/
 /.classpath
 /.project
-/simpleruleengine.mpr
 /simpleruleengine.mpr.bak
 /simpleruleengine.mpr.lock
 /modeler-merge-marker
@@ -17,12 +16,6 @@
 /nativemobile/builds/
 /.gradle/
 /.idea/
-/widgets/
-/themesource/
-/theme-cache/
-/theme/
-/resources/
-/javascriptsource/
 
 
 # Ignore Gradle project-specific cache directory
