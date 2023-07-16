@@ -1,3 +1,5 @@
+[![Known Vulnerabilities](https://snyk.io/test/github/mendixlabs/SimpleRulesEngine/badge.svg?targetFile=simplerulesengine/build.gradle&tab=dependencies)](https://snyk.io/test/github/mendixlabs/SimpleRulesEngine?targetFile=simplerulesengine/build.gradle&tab=dependencies)
+[![Support](https://img.shields.io/badge/Mendix%20Support%3A-Community-green.svg)](https://docs.mendix.com/community/app-store/app-store-content-support)
 ## What is Rules Engine and it's benefit?
 To put it in simple term, it's an expert program which runs the conditions (viz. rules) on the data and if any condition (viz. a rule) matches then it executes the corresponding actions.
 
