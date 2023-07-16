@@ -1,0 +1,32 @@
+/*.launch
+/deployment/
+/packages/
+/releases/
+/.mendix-cache/
+/.classpath
+/.project
+/simpleruleengine.mpr
+/simpleruleengine.mpr.bak
+/simpleruleengine.mpr.lock
+/modeler-merge-marker
+/project-settings.user.json
+/javasource/*/proxies/
+/javasource/system/
+/**/node_modules/
+!/javascriptsource/**/node_modules/
+/nativemobile/builds/
+/.gradle/
+/.idea/
+/widgets/
+/themesource/
+/theme-cache/
+/theme/
+/resources/
+/javascriptsource/
+
+
+# Ignore Gradle project-specific cache directory
+.gradle
+
+# Ignore Gradle build output directory
+build

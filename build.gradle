@@ -1,0 +1,73 @@
+plugins {
+    id 'java-library'
+}
+
+allprojects {
+    sourceCompatibility = '11'
+    tasks.withType(JavaCompile) {
+        options.encoding = "UTF-8"
+    }
+    tasks.withType(Test) {
+        systemProperty "file.encoding", "UTF-8"
+    }
+    repositories {
+        mavenCentral()
+        maven {
+            url 'https://nexus.rnd.mendix.com/repository/maven-hosted'
+        }
+    }
+}
+
+configurations {
+    testImplementation.extendsFrom compileOnly // Make Mendix runtime classes available to unit tests
+}
+
+dependencies {
+    //Sub project dependency
+    implementation project(':simplerulesengine')
+
+    //  Mendix runtime APIs. MX_VERSION is defined in gradle.properties. Example: 8.14.1
+    compileOnly "com.mendix:public-api:${MX_VERSION}@jar"
+    compileOnly "com.mendix:logging-api:${MX_VERSION}@jar"
+    compileOnly "com.mendix:m2ee-api:${MX_VERSION}@jar"
+    compileOnly "com.mendix:json:${MX_VERSION}@jar"
+    compileOnly "javax.servlet:servlet-api:2.5"
+    compileOnly 'javax.websocket:javax.websocket-api:1.1'
+}
+sourceSets {
+    main{
+        java {
+            srcDirs 'javasource'
+        }
+    }
+}
+
+task copyJARsToUserLib(type: Copy) {
+    doFirst {
+        configurations.default.each {
+            delete fileTree(dir: "userlib", include: it.name+"*")
+        }
+        def reqLibFileName = ".".concat(project(':simplerulesengine').property("archivesBaseName").toString()).concat(".RequiredLib")
+        fileTree(dir: "userlib", include: "*".concat(reqLibFileName)).each {
+            delete fileTree(dir: "userlib", include: it.name.replace(reqLibFileName,""))
+            delete fileTree(dir: "userlib", include: it.name)
+        }
+    }
+    from configurations.default
+    {
+        exclude('jakarta.activation-api*')
+    }
+    into 'userlib'
+}
+
+task generateUserLib() {
+    dependsOn(copyJARsToUserLib)
+    doLast {
+        configurations.default.each {
+            if(!it.name.contains("jakarta.activation-api")) {
+                new File("userlib", it.name.concat(".").concat(project(':simplerulesengine').property("archivesBaseName").toString()).concat(".RequiredLib")).createNewFile()
+            }
+        }
+    }
+}
+
