@@ -27,17 +27,13 @@ class RuleEngineTest {
     @DisplayName("ThrowErrorIfRuleIsNull")
     void RuleNullCheck() {
         var ruleEngine = new RuleEngine();
-        assertThrows(RuleEngineException.class, () -> {
-            ruleEngine.addRule(null);
-        }, "rule cannot be null");
+        assertThrows(RuleEngineException.class, () -> ruleEngine.addRule(null), "rule cannot be null");
     }
 
     @Test
     @DisplayName("ThrowErrorWithoutRuleAdded")
     void ExecuteEngineWithoutRules() {
-        assertThrows(RuleEngineException.class, () -> {
-            new RuleEngine().execute(null);
-        }, "Please add rules before executing the engine.");
+        assertThrows(RuleEngineException.class, () -> new RuleEngine().execute(null, null), "Please add rules before executing the engine.");
     }
 
     @ParameterizedTest
@@ -79,7 +75,7 @@ class RuleEngineTest {
             {
                 ruleEngine.addRule(rule);
             }
-            ruleEngine.execute(candidate);
+            ruleEngine.execute(candidate, null);
             if(candidate.getName().equals("a"))
             {
                 System.out.println("For candidate a");

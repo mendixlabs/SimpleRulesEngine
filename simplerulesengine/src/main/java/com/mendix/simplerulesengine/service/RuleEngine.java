@@ -29,7 +29,7 @@ public class RuleEngine {
         mendixCoreLogger.debug(String.format("Rule ID is %s added into the engine.", rule.getId()));
     }
 
-    public void execute(Object data) throws RuleEngineException {
+    public void execute(Object inputData, Object outputData) throws RuleEngineException {
 
         if(rules == null || rules.isEmpty())
             throw new RuleEngineException("Please add rules before executing the engine.");
@@ -40,10 +40,10 @@ public class RuleEngine {
         {
 
             mendixCoreLogger.debug(String.format("Evaluating condition for rule id %s", rule.getId()));
-            if(evaluateRuleCondition(rule.getCondition(), data))
+            if(evaluateRuleCondition(rule.getCondition(), inputData))
             {
                 mendixCoreLogger.debug(String.format("Executing action for rule id %s", rule.getId()));
-                executeRuleAction(rule.getAction(), data);
+                executeRuleAction(rule.getAction(), inputData, outputData);
                 mendixCoreLogger.debug(String.format("Action executed for rule id %s", rule.getId()));
             }
             else
@@ -53,12 +53,12 @@ public class RuleEngine {
         }
     }
 
-    private boolean evaluateRuleCondition(String condition, Object data) throws RuleEngineException {
+    private boolean evaluateRuleCondition(String condition, Object inputData) throws RuleEngineException {
         try
         {
-            condition = ExpressionResolverService.resolveCondition(condition, data);
+            condition = ExpressionResolverService.resolveCondition(condition, inputData);
             VariableResolverFactory resolverFactory = new MapVariableResolverFactory();
-            resolverFactory.createVariable("input", data);
+            resolverFactory.createVariable("input", inputData);
             return MVEL.evalToBoolean(condition, resolverFactory);
         }
         catch (Exception ex)
@@ -67,12 +67,13 @@ public class RuleEngine {
         }
     }
 
-    private void executeRuleAction(String action, Object data) throws RuleEngineException {
+    private void executeRuleAction(String action, Object inputData, Object outputData) throws RuleEngineException {
         try
         {
             VariableResolverFactory resolverFactory = new MapVariableResolverFactory();
-            resolverFactory.createVariable("input", data);
-            action = ExpressionResolverService.resolveAction(action, data);
+            resolverFactory.createVariable("input", inputData);
+            resolverFactory.createVariable("output", outputData);
+            action = ExpressionResolverService.resolveAction(action, inputData, outputData);
             MVEL.eval(action, resolverFactory);
         }
         catch (Exception ex) {

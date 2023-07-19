@@ -24,7 +24,7 @@ class MendixExpressionLanguageTests extends ExpressionLangTestData
     @MethodSource("Actions")
     void CheckMXExpressionLangForActions(String action, String expected) throws MendixAPIExecutionException {
         System.out.printf("action: %s%n", action);
-        action = ExpressionResolverService.resolveAction(action, null);
+        action = ExpressionResolverService.resolveAction(action, null, null);
         assertEquals(expected, action);
     }
 

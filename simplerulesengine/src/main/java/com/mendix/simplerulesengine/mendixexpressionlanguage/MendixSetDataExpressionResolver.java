@@ -10,14 +10,21 @@ import static com.mendix.simplerulesengine.mendixapi.MendixAPIRegistry.mendixCor
 public class MendixSetDataExpressionResolver implements IMxActionExpressionResolver
 {
     protected static final String RESOLVER_KEY = "setVal";
-    public static final Pattern EXPRESSIONPATTERN = Pattern.compile(String.format("\\$\\(%s\\.%s\\.input\\.([a-zA-Z0-9_]+)\\s*=(.+)\\)\\s*;?", IMxConditionExpressionResolver.EXPRESSIONKEYWORD, RESOLVER_KEY));
+    public static final Pattern EXPRESSIONPATTERN = Pattern.compile(String.format("\\$\\(%s\\.%s\\.(input|output)\\.([a-zA-Z0-9_]+)\\s*=(.+?)\\)\\s*;?", ExpressionResolverService.EXPRESSIONKEYWORD, RESOLVER_KEY));
     @Override
-    public String perfromAction(String expression, Object data) throws MendixAPIExecutionException
+    public String perfromAction(String expression, Object inputData, Object outputData) throws MendixAPIExecutionException
     {
         Matcher matcher = EXPRESSIONPATTERN.matcher(expression);
         while (matcher.find())
         {
-            mendixCoreMetaObjectOperations.setValue(data, matcher.group(1), matcher.group(2).trim());
+            if(matcher.group(1).equals("input"))
+            {
+                mendixCoreMetaObjectOperations.setValue(inputData, matcher.group(2), matcher.group(3).trim());
+            }
+            if(matcher.group(1).equals("output"))
+            {
+                mendixCoreMetaObjectOperations.setValue(outputData, matcher.group(2), matcher.group(3).trim());
+            }
             expression = expression.replace(matcher.group(0), "");
         }
         return expression;

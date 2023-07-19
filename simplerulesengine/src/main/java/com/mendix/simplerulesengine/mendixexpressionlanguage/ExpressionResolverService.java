@@ -7,8 +7,9 @@ import java.util.regex.Pattern;
 
 public class ExpressionResolverService
 {
+    static final String EXPRESSIONKEYWORD = "mx";
     private ExpressionResolverService(){}
-    public static final Pattern EXPRESSIONPATTERN = Pattern.compile(String.format("(\\$\\(%s\\.([a-zA-Z]+)\\.[a-zA-Z0-9_.=\\s]+\\)\\s*;?)", IMxConditionExpressionResolver.EXPRESSIONKEYWORD));
+    public static final Pattern EXPRESSIONPATTERN = Pattern.compile(String.format("(\\$\\(%s\\.([a-zA-Z]+)\\.[a-zA-Z0-9_.=\\s]+\\)\\s*;?)", EXPRESSIONKEYWORD));
     public static String resolveCondition(String expression, Object input) throws MendixAPIExecutionException {
         Matcher matcher = EXPRESSIONPATTERN.matcher(expression);
         while (matcher.find())
@@ -20,6 +21,8 @@ public class ExpressionResolverService
                 case MendixGetDataExpressionResolver.RESOLVER_KEY:
                     mxExpressionResolver = new MendixGetDataExpressionResolver();
                     break;
+                default:
+                    break;
             }
             if(mxExpressionResolver != null)
             {
@@ -30,7 +33,7 @@ public class ExpressionResolverService
         return expression;
     }
 
-    public static String resolveAction(String action, Object input) throws MendixAPIExecutionException {
+    public static String resolveAction(String action, Object input, Object output) throws MendixAPIExecutionException {
         Matcher matcher = EXPRESSIONPATTERN.matcher(action);
         while (matcher.find())
         {
@@ -44,10 +47,12 @@ public class ExpressionResolverService
                 case MendixSetDataExpressionResolver.RESOLVER_KEY:
                     mxActionExpressionResolver = new MendixSetDataExpressionResolver();
                     break;
+                default:
+                    break;
             }
             if(mxActionExpressionResolver != null)
             {
-                var resolvedAction = mxActionExpressionResolver.perfromAction(matcher.group(0), input);
+                var resolvedAction = mxActionExpressionResolver.perfromAction(matcher.group(0), input, output);
                 action = action.replace(matcher.group(0), resolvedAction);
             }
         }

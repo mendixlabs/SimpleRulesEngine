@@ -32,12 +32,14 @@ public class RulesExecutor extends CustomJavaAction<java.lang.Void>
 	private IMendixObject __RuleNamespace;
 	private simplerulesengine.proxies.RulesNamespace RuleNamespace;
 	private IMendixObject InputData;
+	private IMendixObject OutputData;
 
-	public RulesExecutor(IContext context, IMendixObject RuleNamespace, IMendixObject InputData)
+	public RulesExecutor(IContext context, IMendixObject RuleNamespace, IMendixObject InputData, IMendixObject OutputData)
 	{
 		super(context);
 		this.__RuleNamespace = RuleNamespace;
 		this.InputData = InputData;
+		this.OutputData = OutputData;
 	}
 
 	@java.lang.Override
@@ -73,7 +75,7 @@ public class RulesExecutor extends CustomJavaAction<java.lang.Void>
 			ruleEngine.addRule(coreRule);
 		}
 
-		ruleEngine.execute(this.InputData);
+		ruleEngine.execute(this.InputData, this.OutputData);
 
 		return null;
 		// END USER CODE

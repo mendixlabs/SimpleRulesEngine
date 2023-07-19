@@ -4,7 +4,5 @@ import com.mendix.simplerulesengine.exception.MendixAPIExecutionException;
 
 public interface IMxActionExpressionResolver
 {
-    static final String EXPRESSIONKEYWORD = "mx";
-
-    String perfromAction(String expression, Object data) throws MendixAPIExecutionException;
+    String perfromAction(String expression, Object inputData, Object outputData) throws MendixAPIExecutionException;
 }
