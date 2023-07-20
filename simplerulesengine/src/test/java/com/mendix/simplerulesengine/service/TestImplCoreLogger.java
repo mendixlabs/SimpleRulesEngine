@@ -22,4 +22,9 @@ public class TestImplCoreLogger implements IMendixCoreLogger {
     public void error(String message, Throwable cause) {
         System.out.printf("Error: %s%n", message);
     }
+
+    @Override
+    public void warn(String message) {
+        System.out.printf("Warn: %s%n", message);
+    }
 }

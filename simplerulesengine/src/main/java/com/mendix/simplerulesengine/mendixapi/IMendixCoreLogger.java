@@ -7,4 +7,5 @@ public interface IMendixCoreLogger
     void trace(String message);
     void debug(String message);
     void error(String message, Throwable cause);
+    void warn(String message);
 }

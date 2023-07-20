@@ -24,4 +24,9 @@ public class MendixCoreLoggerImpl implements IMendixCoreLogger
     public void error(String message, Throwable throwable) {
         logNode.error(message, throwable);
     }
+
+    @Override
+    public void warn(String message) {
+        logNode.warn(message);
+    }
 }

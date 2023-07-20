@@ -22,6 +22,12 @@ public class RuleEngine {
         if(rules == null)
             rules = new TreeSet<>(Comparator.comparingInt(Rule::getSequence));
 
+        if(!rules.isEmpty() && rules.stream().anyMatch(r -> r.getSequence() == rule.getSequence()))
+        {
+            mendixCoreLogger.warn(String.format("Unable to add rule %s because the sequence number of this rule is duplicate within this namespace", rule.getId()));
+            return;
+        }
+
         if(!rules.isEmpty() && rules.stream().anyMatch(r -> r.getNamespace().equals(rule.getNamespace()) && r.getId() == rule.getId()))
             throw new RuleEngineException("rule is already added");
 
