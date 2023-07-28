@@ -17,7 +17,7 @@ Simple Rule Engine is the simple, stupid rules engine. It provides the facility 
 Surprisingly by using a simple Mendix Expression Language this rule engine also supports defining conditions on Mendix object, as well as you can define actions on Mendix objects and even execute a Microflow.
 
 ## Features
-- Define rules on Mendix objects by using [Mendix Expression Language](MEL.md) (MEL)
+- Define rules on Mendix objects by using [Mendix Expression Language](https://github.com/mendixlabs/SimpleRulesEngine/wiki/Mendix-Expression-Language) (MEL)
 - Ability to define namespace to hold set rules together 
 - Each rule will have it's corresponding action and that will be executed when condition is satisfied
 - By using Mendix Expression Language (MEL) in Action we can modify (set) value of an attribute of input or output object
@@ -39,8 +39,8 @@ Once you defined a Namespace now you can create rules within it. Rules have the 
 - Name (required): any string name to identify the rule in a better way.
 - Description (optional): any string which will describe about the rule.
 - Sequence (required): a number. This should be unique within the selected namespace. Within a namespace multiple rules can not have same sequence number, and if duplication in sequence number is found then only first rule will be considered by Rules Engine.
-- Condition (required): set of conditions that should be satisfied in order to apply the rule (or to execute action defined). You can also use [Mendix Expression Language](MEL.md) (MEL to define conditions by using Mendix object passed as input to `RuleEngine`
-- Action (required): set of actions to perform when conditions are satisfied. By using [Mendix Expression Language](MEL.md) (MEL) we can modify the input/output Mendix objects and can also call a Microflow.
+- Condition (required): set of conditions that should be satisfied in order to apply the rule (or to execute action defined). You can also use [Mendix Expression Language](https://github.com/mendixlabs/SimpleRulesEngine/wiki/Mendix-Expression-Language) (MEL to define conditions by using Mendix object passed as input to `RuleEngine`
+- Action (required): set of actions to perform when conditions are satisfied. By using [Mendix Expression Language](https://github.com/mendixlabs/SimpleRulesEngine/wiki/Mendix-Expression-Language) (MEL) we can modify the input/output Mendix objects and can also call a Microflow.
 
 # How to execute `RulesEngine` by using defined rules?
 To execute rules you can use "RulesExecutor" JavaAction from `__UseMe` folder of the module. This JavaAction takes 3 inputs:
