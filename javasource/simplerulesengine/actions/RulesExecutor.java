@@ -29,15 +29,15 @@ import java.util.stream.Collectors;
 
 public class RulesExecutor extends CustomJavaAction<java.lang.Void>
 {
-	private IMendixObject __RuleNamespace;
-	private simplerulesengine.proxies.RulesNamespace RuleNamespace;
+	private IMendixObject __RulesNamespace;
+	private simplerulesengine.proxies.RulesNamespace RulesNamespace;
 	private IMendixObject InputData;
 	private IMendixObject OutputData;
 
-	public RulesExecutor(IContext context, IMendixObject RuleNamespace, IMendixObject InputData, IMendixObject OutputData)
+	public RulesExecutor(IContext context, IMendixObject RulesNamespace, IMendixObject InputData, IMendixObject OutputData)
 	{
 		super(context);
-		this.__RuleNamespace = RuleNamespace;
+		this.__RulesNamespace = RulesNamespace;
 		this.InputData = InputData;
 		this.OutputData = OutputData;
 	}
@@ -45,13 +45,13 @@ public class RulesExecutor extends CustomJavaAction<java.lang.Void>
 	@java.lang.Override
 	public java.lang.Void executeAction() throws Exception
 	{
-		this.RuleNamespace = this.__RuleNamespace == null ? null : simplerulesengine.proxies.RulesNamespace.initialize(getContext(), __RuleNamespace);
+		this.RulesNamespace = this.__RulesNamespace == null ? null : simplerulesengine.proxies.RulesNamespace.initialize(getContext(), __RulesNamespace);
 
 		// BEGIN USER CODE
-		if(this.RuleNamespace == null)
+		if(this.RulesNamespace == null)
 			throw new RuleEngineException("Rule namespace cannot be empty");
 
-		List<IMendixObject> rulesMxObj = Core.retrieveByPath(getContext(), this.RuleNamespace.getMendixObject(), Rules.MemberNames.Rules_RulesNamespace.toString());
+		List<IMendixObject> rulesMxObj = Core.retrieveByPath(getContext(), this.RulesNamespace.getMendixObject(), Rules.MemberNames.Rules_RulesNamespace.toString());
 
 		List<Rules> rules = Optional.ofNullable(rulesMxObj)
 				.orElse(Collections.emptyList())
@@ -66,7 +66,7 @@ public class RulesExecutor extends CustomJavaAction<java.lang.Void>
 		MendixAPIRegistry.setMendixCoreMetaObjectOperator(new MendixCoreMetaObjectOperationsImpl(getContext()));
 		MendixAPIRegistry.setMendixMicroflowCaller(new MendixMicroflowCallImpl(getContext()));
 
-		MendixCoreLoggerImpl.logNode.info(String.format("Initializing SimpleRuleEngine for namespace %s", this.RuleNamespace.getNamespace()));
+		MendixCoreLoggerImpl.logNode.info(String.format("Initializing SimpleRuleEngine for namespace %s", this.RulesNamespace.getNamespace()));
 		var ruleEngine = new RuleEngine();
 		for (var rule : rules)
 		{
