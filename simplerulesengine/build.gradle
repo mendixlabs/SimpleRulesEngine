@@ -4,7 +4,7 @@ plugins {
 
 group 'com.mendix'
 version '1.0.0'
-
+project.archivesBaseName = "SimpleRulesEngine"
 repositories {
     mavenCentral()
 }
@@ -30,4 +30,10 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+tasks.register("getAllFirstLevelDependencies") {
+    ext {
+        deps = configurations.default.resolvedConfiguration.firstLevelModuleDependencies
+    }
 }

@@ -1,0 +1,4 @@
+dependency org.mvel:mvel2:2.5.0.Final
+delete mvel2-2.5.0.Final.jar
+delete mvel2-2.5.0.Final.jar.SimpleRulesEngine.RequiredLib
+delete SimpleRulesEngine.migration

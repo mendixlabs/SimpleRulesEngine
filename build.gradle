@@ -1,7 +1,7 @@
 plugins {
     id 'java-library'
 }
-
+var moduleName = "SimpleRulesEngine"
 allprojects {
     sourceCompatibility = '11'
     tasks.withType(JavaCompile) {
@@ -47,7 +47,7 @@ task copyJARsToUserLib(type: Copy) {
         configurations.default.each {
             delete fileTree(dir: "userlib", include: it.name+"*")
         }
-        def reqLibFileName = ".".concat(project(':simplerulesengine').property("archivesBaseName").toString()).concat(".RequiredLib")
+        def reqLibFileName = ".".concat(moduleName).concat(".RequiredLib")
         fileTree(dir: "userlib", include: "*".concat(reqLibFileName)).each {
             delete fileTree(dir: "userlib", include: it.name.replace(reqLibFileName,""))
             delete fileTree(dir: "userlib", include: it.name)
@@ -65,9 +65,28 @@ task generateUserLib() {
     doLast {
         configurations.default.each {
             if(!it.name.contains("jakarta.activation-api")) {
-                new File("userlib", it.name.concat(".").concat(project(':simplerulesengine').property("archivesBaseName").toString()).concat(".RequiredLib")).createNewFile()
+                new File("userlib", it.name.concat(".").concat(moduleName).concat(".RequiredLib")).createNewFile()
             }
         }
     }
 }
 
+task generateMigrationFile() {
+    doLast {
+        var file = new File("userlib", moduleName.concat(".migration"));
+        file.createNewFile();
+        file.text = ""
+        var implProjectDependencies = (Set<ResolvedDependency>) tasks.getByPath(":simplerulesengine:getAllFirstLevelDependencies").deps
+        implProjectDependencies.each {
+            file.append("dependency ".concat(it.module.id.group).concat(":").concat(it.module.id.name).concat(":").concat(it.module.id.version).concat("\n"))
+        }
+
+        configurations.default.resolvedConfiguration.resolvedArtifacts.each {
+            if (!it.moduleVersion.id.name.equals("Implementation")) {
+                file.append("delete ".concat(it.file.name).concat("\n"))
+                file.append("delete ".concat(it.file.name.concat(".").concat(moduleName).concat(".RequiredLib")).concat("\n"))
+            }
+        }
+        file.append("delete ".concat(file.name))
+    }
+}
