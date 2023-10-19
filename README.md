@@ -18,11 +18,14 @@ Surprisingly by using a simple Mendix Expression Language this rule engine also 
 
 ## Features
 - Define rules on Mendix objects by using [Mendix Expression Language](https://github.com/mendixlabs/SimpleRulesEngine/wiki/Mendix-Expression-Language) (MEL)
-- Ability to define namespace to hold set rules together 
+- Ability to define namespace to hold set of rules together 
 - Each rule will have it's corresponding action and that will be executed when condition is satisfied
 - By using Mendix Expression Language (MEL) in Action we can modify (set) value of an attribute of input or output object
 - As an Action you can also call a Microflow
 - Rules engine is Mendix context aware, that means you can use it with NPE as well
+
+## Upcoming Features
+- Ability to set `skipOnFirstFailedRule` which will skip next rules within namespace if a rule fails due any exception
 
 ## How to configure Simple Rules Engine in your app?
 - Download the module in your Mendix App
