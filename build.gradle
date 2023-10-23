@@ -26,6 +26,7 @@ dependencies {
     //Sub project dependency
     implementation project(':simplerulesengine')
 
+    compileOnly fileTree(dir: 'userlib', include: ['commons-codec-1.13.jar','commons-io-2.11.0.jar','commons-lang3-3.12.0.jar','hamcrest-core-1.3.jar','httpclient5-5.0.3.jar','httpcore5-5.0.2.jar','httpcore5-h2-5.0.2.jar','junit-4.13.1.jar','slf4j-api-1.7.25.jar'])
     //  Mendix runtime APIs. MX_VERSION is defined in gradle.properties. Example: 8.14.1
     compileOnly "com.mendix:public-api:${MX_VERSION}@jar"
     compileOnly "com.mendix:logging-api:${MX_VERSION}@jar"
