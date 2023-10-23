@@ -1,0 +1,1 @@
+{"BranchName":"main","ModelerVersion":"9.18.4.62522","ModelChanges":[{"Status":"Modified","UnitID":"3ff86472-9909-4fd5-99a2-c059dda91dd1","UnitType":"Constants$Constant","UnitName":"SimpleRulesEngine_Version","Module":"SimpleRulesEngine"}],"RelatedStories":[],"isWebModelerCommit":false,"HasModelerVersion":true}
